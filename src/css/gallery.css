@@ -12,7 +12,40 @@
   gap: 10px;
   flex-wrap: wrap;
 }
+
 .image-container img {
   width: auto;
   height: 180px;
+  object-fit: cover;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .gallery {
+    padding: 20px;
+  }
+
+  .image-container {
+    gap: 8px; /* Reduce gap for smaller screens */
+  }
+
+  .image-container img {
+    width: 100%; /* Full width on smaller devices */
+    height: auto; /* Maintain aspect ratio */
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery {
+    padding: 15px;
+  }
+
+  .image-container {
+    gap: 5px;
+  }
+
+  .image-container img {
+    width: 100%;
+    height: auto;
+  }
 }
