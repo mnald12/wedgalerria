@@ -1,0 +1,66 @@
+.project-container {
+  background-color: snow;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  max-width: 100%;
+}
+
+.project-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.progress-bar-container {
+  background-color: white;
+  border-radius: 5px;
+  overflow: hidden;
+  height: 25px;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #4caf50;
+  text-align: center;
+  line-height: 25px;
+  color: #fff;
+  width: 0;
+  transition: width 0.5s ease-in-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .project-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .progress-bar-container {
+    height: 20px;
+  }
+
+  .progress-bar {
+    line-height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-container {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .project-title {
+    font-size: 14px;
+  }
+
+  .progress-bar-container {
+    height: 18px;
+  }
+
+  .progress-bar {
+    line-height: 18px;
+  }
+}

@@ -1,0 +1,94 @@
+.home {
+  height: auto;
+  padding: 30px;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 20px;
+}
+
+.home .home-left {
+  width: 60%;
+  height: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.home .home-left h1 {
+  margin-left: 16px;
+  margin-right: 10px;
+}
+
+.home .home-left p {
+  padding: 12px 0;
+  margin-left: 16px;
+  margin-right: 10px;
+}
+
+.home .home-right {
+  width: 40%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home .home-right img {
+  width: 100%;
+  height: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .home {
+    padding: 20px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .home .home-left {
+    width: 100%;
+    max-width: 100%;
+    z-index: 2;
+    position: relative;
+    padding: 40px 20px;
+    overflow: hidden;
+  }
+
+  /* Background image with overlay */
+  .home .home-left::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../images/m&j.jpg);
+    background-size: cover;
+    background-position: center;
+    opacity: 0.5; /* Adjust the opacity for readability */
+    z-index: -1;
+  }
+
+  .home .home-right {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .home {
+    padding: 15px;
+  }
+
+  .home .home-left h1 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .home .home-left p {
+    font-size: 0.9rem;
+    padding: 10px 0;
+    margin: 0;
+  }
+}
