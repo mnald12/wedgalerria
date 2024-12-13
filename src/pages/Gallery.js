@@ -7,6 +7,7 @@ import {
   query,
   limit,
   startAfter,
+  onSnapshot,
 } from "firebase/firestore";
 
 const Gallery = () => {
@@ -37,6 +38,23 @@ const Gallery = () => {
     };
 
     getInitialImages();
+  }, []);
+
+  useEffect(() => {
+    // Reference to the Firestore collection
+    const picturesRef = collection(db, "pictures");
+
+    // Set up a realtime listener
+    const unsubscribe = onSnapshot(picturesRef, (snapshot) => {
+      const newPictures = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setImages(newPictures);
+    });
+
+    // Clean up the listener on component unmount
+    return () => unsubscribe();
   }, []);
 
   const fetchMoreImages = async () => {
@@ -80,17 +98,27 @@ const Gallery = () => {
     <div className="gallery">
       <h2>Captured Moments</h2>
       <br></br>
-      <div className="image-container">
-        {images.map((img, index) => (
-          <img
-            ref={index === images.length - 1 ? lastImageRef : null}
-            src={img.pic}
-            alt="m&j"
-            loading="lazy"
-            key={img.id}
-          />
-        ))}
-      </div>
+      {images.length > 0 ? (
+        <>
+          <div className="image-container">
+            {images.map((img, index) => (
+              <img
+                ref={index === images.length - 1 ? lastImageRef : null}
+                src={img.pic}
+                alt="m&j"
+                loading="lazy"
+                key={img.id}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        <h5>
+          "No photos yet! Let’s capture the love, be the first to share a
+          cherished moment from the wedding."
+        </h5>
+      )}
+
       {isFetching && <p>Loading more images...</p>}
     </div>
   );

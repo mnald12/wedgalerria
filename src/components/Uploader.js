@@ -12,6 +12,7 @@ const Uploadeer = () => {
   const [loaded, setLoaded] = useState(0);
   const [isUpLoading, setIsUpLoading] = useState(false);
   const [isGoodToUpload, setIsGoodToUpload] = useState(false);
+  const [isThanking, setIsThanking] = useState(false);
 
   const filesizes = (bytes, decimals = 2) => {
     if (bytes === 0) return "0 Bytes";
@@ -21,39 +22,6 @@ const Uploadeer = () => {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   };
-
-  // const InputChange = (e) => {
-  //   // --For Multiple File Input
-  //   let images = [];
-  //   for (let i = 0; i < e.target.files.length; i++) {
-  //     images.push(e.target.files[i]);
-  //     let reader = new FileReader();
-  //     let file = e.target.files[i];
-  //     reader.onloadend = () => {
-  //       SetSelectedFile((preValue) => {
-  //         return [
-  //           ...preValue,
-  //           {
-  //             id: shortid.generate(),
-  //             image: e.target.files[i],
-  //             filename: e.target.files[i].name,
-  //             filetype: e.target.files[i].type,
-  //             fileimage: reader.result,
-  //             datetime:
-  //               e.target.files[i].lastModifiedDate.toLocaleString("en-IN"),
-  //             filesize: filesizes(e.target.files[i].size),
-  //           },
-  //         ];
-  //       });
-  //     };
-  //     if (e.target.files[i]) {
-  //       reader.readAsDataURL(file);
-  //     }
-  //     if (i === e.target.files.length - 1) {
-  //       setIsGoodToUpload(true);
-  //     }
-  //   }
-  // };
 
   const InputChange = (e) => {
     let images = [];
@@ -137,7 +105,13 @@ const Uploadeer = () => {
       // Wait for all uploads to finish
       await Promise.all(uploadPromises);
 
-      setIsUpLoading(false); // End uploading state
+      setIsThanking(true);
+
+      setTimeout(() => {
+        setIsUpLoading(false);
+        setIsThanking(false);
+      }, 2500);
+
       SetSelectedFile([]); // Clear the selected files
     }
   };
@@ -150,20 +124,29 @@ const Uploadeer = () => {
             <div className="card-body scrollable">
               {isUpLoading ? (
                 <div className="project-list">
-                  <div className="project-container">
-                    Uploading...
-                    <div className="progress-bar-container">
-                      <div
-                        className="progress-bar"
-                        aria-valuenow={0}
-                        aria-valuemin={0}
-                        aria-valuemax={100}
-                        style={{ width: loaded > 0 ? `${loaded}%` : "0" }}
-                      >
-                        {loaded}%
+                  {isThanking ? (
+                    <div>
+                      <h4>
+                        Thank you for sharing! Your photo has been added to the
+                        gallery.
+                      </h4>
+                    </div>
+                  ) : (
+                    <div className="project-container">
+                      Uploading...
+                      <div className="progress-bar-container">
+                        <div
+                          className="progress-bar"
+                          aria-valuenow={0}
+                          aria-valuemin={0}
+                          aria-valuemax={100}
+                          style={{ width: loaded > 0 ? `${loaded}%` : "0" }}
+                        >
+                          {loaded}%
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               ) : (
                 <div className="kb-data-box">
